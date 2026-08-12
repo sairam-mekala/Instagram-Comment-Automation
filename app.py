@@ -7,13 +7,18 @@ from flask import Flask, request
 load_dotenv()
 
 ACCESS_TOKEN = os.getenv("INSTAGRAM_ACCESS_TOKEN")
-VERIFY_TOKEN = "instagram_test_token"
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
-IG_USER_ID = "27884946851148261"
-IG_WEBHOOK_USER_ID = "17841442834056441"
+IG_USER_ID = os.getenv("IG_USER_ID")
+IG_WEBHOOK_USER_ID = os.getenv("IG_WEBHOOK_USER_ID")
 
-with open("rules.json", "r", encoding="utf-8") as f:
-    RULES = json.load(f)
+rules_json = os.getenv("RULES_JSON")
+
+if rules_json:
+    RULES = json.loads(rules_json)
+else:
+    with open("rules.json", "r", encoding="utf-8") as f:
+        RULES = json.load(f)
 
 app = Flask(__name__)
 
